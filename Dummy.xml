@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="dummy"> 
+   <listeners>
+       <listener class-name="BasePackage.ScreenShotListener"></listener>
+   </listeners>
+    <test name="test1">
+        <classes>
+            <class name="AutomationScripts.ProjectMenu"> 
+            <methods>
+                <include name="verify_QuickStart_Button"/>
+            </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>
+    
