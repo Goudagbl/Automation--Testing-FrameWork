@@ -108,6 +108,7 @@ public class Repository extends BaseTest {
      iproject.validate_Created_Project(webProjectName,projectType);
      RepoPage repo = plist.navigateToRepository();
      repo.createPageForWebAndAddElement(page,pageDescription,eleName,elementType,locatorType,valueType,locatorValue);
+     Thread.sleep(5000);
      repo.shareElement(page,eleName);
 
     }

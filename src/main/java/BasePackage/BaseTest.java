@@ -99,7 +99,7 @@ public class BaseTest {
         signIn = new Sign_InPage(driver);
         return signIn;
     }
-    @AfterMethod()
+    @AfterMethod(enabled = false)
     public void tearDown(){
 
         driver.close();

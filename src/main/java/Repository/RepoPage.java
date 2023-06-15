@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
+import javax.lang.model.util.Elements;
 import java.util.List;
 
 public class RepoPage extends Libraries {
@@ -104,6 +105,31 @@ public class RepoPage extends Libraries {
 
     @FindBy(xpath = "//*[@id='account_tree_black_48dp']")
     WebElement elementExpandIcon;
+
+    // below dropdown for to access shared elements & Projects elements
+    @FindBy(xpath = "//img[contains(@alt,'DropDownArrow')]")
+    WebElement elementsDropdown;
+
+    @FindBy(xpath = "//label[@role='menuitem']")
+   List <WebElement> projectElementsAndSharedElementOptions;
+
+    @FindBy(xpath = "//span[contains(@class,'pageHeading')]")
+    WebElement sharedElements;
+
+    @FindBy(xpath = "//div[contains(@class,'fontPoppinsRegularMd ')]")
+   List <WebElement> listOfSharedElements;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -229,9 +255,9 @@ public class RepoPage extends Libraries {
     }
 
     public void navigateToCreateElementPopup(String CreatedPage){
-        wait_elementToBeClickable(driver.findElement(By.xpath("//span[@class='fancytree-title' and text()='"+CreatedPage+"']")),5);
-        mouse_Hover_Action(driver.findElement(By.xpath("//span[@class='fancytree-title' and text()='"+CreatedPage+"']"))).build().perform();
-       WebElement add = driver.findElement(By.xpath("//span[@class='fancytree-title' and text()='"+CreatedPage+"']/..//button[@class='add-btn']"));
+        wait_elementToBeClickable(driver.findElement(By.xpath("//span[@class='fancytree-title ' and text()='"+CreatedPage+"']")),5);
+        mouse_Hover_Action(driver.findElement(By.xpath("//span[@class='fancytree-title ' and text()='"+CreatedPage+"']"))).build().perform();
+       WebElement add = driver.findElement(By.xpath("//span[@class='fancytree-title ' and text()='"+CreatedPage+"']/..//button[@class='add-btn']"));
        clickOnElement(add);
        wait_elementToBeClickable(addElementButton,3);
        mouse_Hover_Action(addElementButton).click().build().perform();
@@ -242,13 +268,38 @@ public class RepoPage extends Libraries {
 
 
     public void shareElement(String pageName,String eleName){
-      //  wait_elementToBeClickable(elementExpandIcon,5);
-      //  clickOnElement(elementExpandIcon);
-        WebElement pageExpandIcon = driver.findElement(By.xpath("//span[text()='"+pageName+"']/../preceding-sibling :: span[@class='fancytree-expander']"));
-        clickOnElement(pageExpandIcon);
+        // wait_elementToBeClickable(elementExpandIcon,5);
+       clickOnElement(elementExpandIcon);
+       WebElement pageExpandIcon = driver.findElement(By.xpath("//span[text()='"+pageName+"']/../preceding-sibling :: span[@class='fancytree-expander']"));
+       mouse_Hover_Action(pageExpandIcon).click().build().perform();
+       wait_Element_To_Be_Visual(driver.findElement(By.xpath("//span[text()='"+eleName+"']")),5);
        WebElement shareIcon = driver.findElement(By.xpath("//span[text()='"+eleName+"']/../../..//span[@class='slider round']"));
        wait_elementToBeClickable(shareIcon,5);
        clickOnElement(shareIcon);
+       wait_elementToBeClickable(elementsDropdown,5);
+       clickOnElement(elementsDropdown);
+       wait_Elements_To_Be_Visual(projectElementsAndSharedElementOptions,5);
+       for(WebElement option : projectElementsAndSharedElementOptions){
+           if(option.getText().contains("Shared Elements")){
+               clickOnElement(option);
+               break;
+           }
+       }
+       Assert.assertEquals(sharedElements.getText(),"Shared Elements");
+       for(WebElement element : listOfSharedElements){
+           System.out.println(element.getText());
+           if(element.getText().equalsIgnoreCase(eleName)){
+        Assert.assertTrue(true);
+        System.out.println(eleName + " is shared moved to shared section");
+           }
+
+
+       }
+
+
+
+
+
 
 
 
