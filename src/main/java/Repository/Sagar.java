@@ -1,7 +1,8 @@
-Class sagar {
-    public static void main(String [] args){
+package Repository;
 
-        System.out.println("Sagar Patil");
+public class Sagar {
 
-        }
-        }
+    public static void main(String [] ags){
+        System.out.println("Sagar");
+    }
+}
