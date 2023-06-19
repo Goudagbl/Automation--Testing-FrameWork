@@ -55,6 +55,18 @@ public class RepoPage extends Libraries {
     @FindBy(xpath = "//span[contains(@class,'Popup-header')]")
     WebElement selectPage;
 
+
+   @FindBy(css = "#rootRB")
+   WebElement rootPageRadioButton;
+
+    @FindBy(xpath = "//button[text()='Select']")
+    WebElement selectButton;
+
+    @FindBy(xpath = "//div[@class='popup-input-bg']//p")
+    WebElement selectedPage;
+
+
+
     @FindBy(xpath = "//span[text()='Create']")
     WebElement pageCreateButton;
     @FindBy(xpath = " //button[@title='Add Page']")
@@ -116,26 +128,11 @@ public class RepoPage extends Libraries {
     @FindBy(xpath = "//span[contains(@class,'pageHeading')]")
     WebElement sharedElements;
 
-    @FindBy(xpath = "//div[contains(@class,'fontPoppinsRegularMd ')]")
+    @FindBy(xpath = "//tr[@role='row']//div[contains(@class,'fontPoppinsRegularMd ')]")
    List <WebElement> listOfSharedElements;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @FindBy(xpath = "//div[contains(@class,'message')]")
+    WebElement repoTosterMessage;
 
 
 
@@ -149,6 +146,9 @@ public class RepoPage extends Libraries {
         enterIntoElement(pageNameTextField,pageName);
         enterIntoElement(pageDescription,ExpectedPageDescription);
         clickOnElement(pageCreateButton);
+        wait_Element_To_Be_Visual(repoTosterMessage,5);
+        Assert.assertEquals(repoTosterMessage.getText().trim(),pageName +  " Page created successfully");
+        wait_InVisualityOfElement(repoTosterMessage,5);
         navigateToCreateElementPopup(pageName);
         Assert.assertEquals(CreateElementPopupHeaderText.getText(),"Create Element");
         enterIntoElement(elementName,eleName);
@@ -185,7 +185,9 @@ public class RepoPage extends Libraries {
 
             enterIntoElement(locatorTextField, locatorValue);
             clickOnElement(elementCreateButton);
-
+            wait_Element_To_Be_Visual(repoTosterMessage, 10);
+            Assert.assertEquals(repoTosterMessage.getText().trim(),eleName + " "+ elementType + " created successfully");
+            wait_InVisualityOfElement(repoTosterMessage,10);
         }
 
 
@@ -197,6 +199,9 @@ public class RepoPage extends Libraries {
         enterIntoElement(pageNameTextField,screenName);
         enterIntoElement(pageDescription,ExpectedScreenDescription);
         clickOnElement(pageCreateButton);
+        wait_Element_To_Be_Visual(repoTosterMessage,5);
+        Assert.assertEquals(repoTosterMessage.getText().trim(),screenName +  " Screen created successfully");
+        wait_InVisualityOfElement(repoTosterMessage,5);
         navigateToCreateElementPopup(screenName);
         Assert.assertEquals(CreateElementPopupHeaderText.getText(),"Create Element");
         enterIntoElement(elementName,eleName);
@@ -234,6 +239,9 @@ public class RepoPage extends Libraries {
 
         enterIntoElement(locatorTextField, locatorValue);
         clickOnElement(elementCreateButton);
+        wait_Element_To_Be_Visual(repoTosterMessage, 10);
+        Assert.assertEquals(repoTosterMessage.getText().trim(),eleName + " "+ elementType + " created successfully");
+        wait_InVisualityOfElement(repoTosterMessage,10);
     }
 
 
@@ -249,7 +257,7 @@ public class RepoPage extends Libraries {
         wait_elementToBeClickable(addScreen,5);
         createScreenForMobileAndAddElement(ExpectedAndroidScreenName,eleName,elementType,locatorType,valueType,locatorValue,ExpectedAndroidScreenNameDescription);
         wait_elementToBeClickable(pageDropDown,5);
-       javaScriptClick(pageDropDown);
+        clickOnElement(pageDropDown);
         clickOnElement(mobileWeb);
        createScreenForMobileAndAddElement(ExpectedAndroidScreenName,eleName,elementType,locatorType,valueType,locatorValue,ExpectedAndroidScreenNameDescription);
     }
@@ -267,7 +275,7 @@ public class RepoPage extends Libraries {
     }
 
 
-    public void shareElement(String pageName,String eleName){
+    public void shareElement(String pageName,String eleName, String elementType){
         // wait_elementToBeClickable(elementExpandIcon,5);
        clickOnElement(elementExpandIcon);
        WebElement pageExpandIcon = driver.findElement(By.xpath("//span[text()='"+pageName+"']/../preceding-sibling :: span[@class='fancytree-expander']"));
@@ -276,9 +284,11 @@ public class RepoPage extends Libraries {
        WebElement shareIcon = driver.findElement(By.xpath("//span[text()='"+eleName+"']/../../..//span[@class='slider round']"));
        wait_elementToBeClickable(shareIcon,5);
        clickOnElement(shareIcon);
-       wait_elementToBeClickable(elementsDropdown,5);
+       wait_Element_To_Be_Visual(repoTosterMessage,15);
+      // wait_textToBePresentInElement(repoTosterMessage,10,eleName + " " +elementType+ " has been shared to shared elements page successfully");
+        wait_InVisualityOfElement(repoTosterMessage,10);
        clickOnElement(elementsDropdown);
-       wait_Elements_To_Be_Visual(projectElementsAndSharedElementOptions,5);
+       wait_Elements_To_Be_Visual(projectElementsAndSharedElementOptions,2);
        for(WebElement option : projectElementsAndSharedElementOptions){
            if(option.getText().contains("Shared Elements")){
                clickOnElement(option);
@@ -286,18 +296,51 @@ public class RepoPage extends Libraries {
            }
        }
        Assert.assertEquals(sharedElements.getText(),"Shared Elements");
+       wait_Elements_To_Be_Visual(listOfSharedElements,10);
        for(WebElement element : listOfSharedElements){
-           System.out.println(element.getText());
+           // System.out.println(element.getText());
            if(element.getText().equalsIgnoreCase(eleName)){
         Assert.assertTrue(true);
-        System.out.println(eleName + " is shared moved to shared section");
+        System.out.println(eleName + " is shared to shared element Page");
            }
 
 
        }
 
+    }
 
 
+    public void createPageByChosePage(String pageName,String ExpectedPageDescription,String parentPage){
+        clickOnElement(addPage);
+        Assert.assertEquals(createPagePopup.getText(),"Create Page");
+        enterIntoElement(pageNameTextField,pageName);
+        enterIntoElement(pageDescription,ExpectedPageDescription);
+        clickOnElement(choosePage);
+        if (selectPage.getText().contains("Select Page")){
+            Assert.assertTrue(true);
+        }else{
+            Assert.assertTrue(false);
+        }
+        clickOnElement(rootPageRadioButton);
+        wait_elementToBeClickable(selectButton,3);
+        Assert.assertEquals(selectedPage.getText(),parentPage);
+        clickOnElement(pageCreateButton);
+        Assert.assertEquals(repoTosterMessage.getText(),pageName + " Page created successfully");
+    }
+
+    public void addElementFromSharedElement(String pageName,String PageDescription,String parentPage){
+        clickOnElement(elementsDropdown);
+        wait_Elements_To_Be_Visual(projectElementsAndSharedElementOptions,3);
+        for(WebElement option : projectElementsAndSharedElementOptions){
+            if(option.getText().contains("Project Elements")){
+                clickOnElement(option);
+                break;
+
+            }
+        }
+        Assert.assertEquals(projectElements.getText(),"Project Elements");
+        wait_elementToBeClickable(addPage,5);
+        createPageByChosePage(pageName,PageDescription,parentPage);
 
 
 

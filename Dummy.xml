@@ -5,11 +5,7 @@
    </listeners>
     <test name="test1">
         <classes>
-            <class name="AutomationScripts.ProjectMenu"> 
-            <methods>
-                <include name="verify_QuickStart_Button"/>
-            </methods>
-            </class>
+            <class name="AutomationScripts.Repository"></class>
         </classes>
     </test>
 

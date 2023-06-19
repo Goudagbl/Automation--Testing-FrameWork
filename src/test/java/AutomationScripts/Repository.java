@@ -38,7 +38,7 @@ public class Repository extends BaseTest {
 
 
     String eleName = "element-" + randomNumberGenerator();
-    String elementType= "textField";
+    String elementType= "textfield";
     String locatorType = "Xpath";
     String valueType = "static";
     String locatorValue = "//span[text()='Create']";
@@ -46,7 +46,7 @@ public class Repository extends BaseTest {
 
 
     @Test
-    public void verify_userAble_to_CreatePageInWebProject() throws InterruptedException {
+    public void verify_userAble_to_CreatePage_And_AddElementInWebProject()  {
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
@@ -61,13 +61,11 @@ public class Repository extends BaseTest {
         editProject.closeProject(webProjectName + " Project updated successfully");
         plist.deleteProject(webProjectName, webProjectName + " Project deleted successfully");
 
-
-
     }
 
 
     @Test
-    public void verify_UserAble_to_CreateScreenInMobileProject(){
+    public void verify_UserAble_to_CreateScreen_And_AddElementInMobileProject(){
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
@@ -77,6 +75,7 @@ public class Repository extends BaseTest {
         iproject.validate_Created_Project(mobileProjectName,MprojectType);
         RepoPage repo = plist.navigateToRepository();
         repo.createScreenForMobileAndAddElement(screen,eleName,elementType,locatorType,valueType,locatorValue,screenDescription);
+        iproject.navigate_ToProjectsListPage();
         EditProjectPage editProject = plist.navigateToEditProjectPage(mobileProjectName);
         editProject.closeProject(mobileProjectName + " Project updated successfully");
         plist.deleteProject(mobileProjectName, mobileProjectName + " Project deleted successfully");
@@ -94,6 +93,10 @@ public class Repository extends BaseTest {
         iProject.validate_Created_Project(WebMobileprojectName,WebMobileProjectType);
         RepoPage repo = plist.navigateToRepository();
         repo.createPageAndScreenForWebAndMobileProject(page,pageDescription,eleName,elementType,locatorType,valueType,locatorValue,screen,screenDescription);
+        iProject.navigate_ToProjectsListPage();
+        EditProjectPage editProject = plist.navigateToEditProjectPage(webProjectName);
+        editProject.closeProject(webProjectName + " Project updated successfully");
+        plist.deleteProject(webProjectName, webProjectName + " Project deleted successfully");
 
     }
 
@@ -108,8 +111,28 @@ public class Repository extends BaseTest {
      iproject.validate_Created_Project(webProjectName,projectType);
      RepoPage repo = plist.navigateToRepository();
      repo.createPageForWebAndAddElement(page,pageDescription,eleName,elementType,locatorType,valueType,locatorValue);
-     Thread.sleep(5000);
-     repo.shareElement(page,eleName);
+     repo.shareElement(page,eleName,elementType);
+    iproject.navigate_ToProjectsListPage();
+    EditProjectPage editProject = plist.navigateToEditProjectPage(webProjectName);
+    editProject.closeProject(webProjectName + " Project updated successfully");
+    plist.deleteProject(webProjectName, webProjectName + " Project deleted successfully");
+    }
+
+
+    @Test
+    public void verify_UserAble_to_AddElementsFrom_SharedElement(){
+        ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
+        CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
+        Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        TestDevlopmentPage testDev = createPro.create_Project(webProjectName,projectType,wProjectDescription);
+        testDev.validate_userNavigated_TestDevSection("Scripts");
+        IndividualProjectPage iproject = plist.navigate_Individual_ProjectSection();
+        iproject.validate_Created_Project(webProjectName,projectType);
+        RepoPage repo = plist.navigateToRepository();
+        repo.createPageForWebAndAddElement(page,pageDescription,eleName,elementType,locatorType,valueType,locatorValue);
+        repo.shareElement(page,eleName,elementType);
+        repo.addElementFromSharedElement(page,pageDescription,"Root Page");
+
 
     }
 
