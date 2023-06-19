@@ -10,7 +10,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-
 import java.util.List;
 
 public class ProjectListPage extends Libraries {
@@ -109,8 +108,12 @@ public class ProjectListPage extends Libraries {
    }
 
    public EditProjectPage navigateToEditProjectPage(String createdProjectName){
-        avoidStalenessOfWebElement(projectButton);
-        wait_elementToBeClickable(projectButton,5);
+        try {
+            wait_Elements_To_Be_Visual(projectsList, 5);
+        }
+        catch (StaleElementReferenceException exe){
+
+        }
         for(WebElement project : projectsList){
          if(project.getText().equalsIgnoreCase(createdProjectName)){
                mouse_Hover_Action(driver.findElement(By.xpath("//span[text()='"+ createdProjectName +"']/../../..//span[@data-title='Edit']"))).click().build().perform();
@@ -118,6 +121,8 @@ public class ProjectListPage extends Libraries {
             }
 
         }
+
+
        EditProjectPage editProject = new EditProjectPage(driver);
         return editProject;
 
@@ -142,13 +147,19 @@ public class ProjectListPage extends Libraries {
 
 
     public void deleteProject(String deleteProjectName,String expectedTosterMessage){
-        try {
+
+        avoidStalenessOfWebElement(projectButton);
+
+       /* try {
             wait_Elements_To_Be_Visual(projectsList, 5);
         }
-        catch(Exception exe){
-
+        catch(StaleElementReferenceException exe){
         }
-        for(WebElement project : projectsList){
+
+        */
+
+
+      for(WebElement project : projectsList){
             if(project.getText().equalsIgnoreCase(deleteProjectName)){
                    mouse_Hover_Action(project);
                     WebElement projectToBeDelete = driver.findElement(By.xpath("//span[text()='"+ deleteProjectName +"']/../../..//button[contains(@class,'delete-style')]"));
@@ -160,14 +171,22 @@ public class ProjectListPage extends Libraries {
         }
         wait_textToBePresentInElement(deleteProjectTosterMessage,40,expectedTosterMessage);
         System.out.println(deleteProjectName +" Project deleted successfully");
-       /* wait_Elements_To_Be_Visual(projectsList,5);
+
+       /*
+         avoidStalenessOfWebElement(projectButton);
+      try{
+          wait_Elements_To_Be_Visual(projectsList,5);
+      }catch(StaleElementReferenceException exe){
+
+      }
       for(WebElement project : projectsList){
             if(project.getText().equalsIgnoreCase(deleteProjectName)){
                 System.out.println(project.getText() + " Project is not deleted successfully");
+                Assert.assertTrue(false);
             }
+        }
 
-
-        } */
+        */
 
     }
 

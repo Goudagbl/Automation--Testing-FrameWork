@@ -22,9 +22,11 @@ public class CreateProjectPage extends Libraries {
     @FindBy(id = "projectName")
     WebElement name;
 
-    @FindBy(css = "#projecttype")
+    @FindBy(xpath = "//div[@id='projecttype']")
     WebElement projectType_Dropdown;
     //span[contains(text(),'project type')]
+    //*[@data-testid='ArrowDropDownIcon']
+    //div[@id='projecttype']
 
     @FindBy(xpath = "//li[@id='sideLeft']//span[contains(@class,'text')]")
     List<WebElement> projectTypes;
@@ -57,7 +59,7 @@ public class CreateProjectPage extends Libraries {
     @FindBy(css = "#buttonId")
     WebElement createButton;
 
-    public TestDevlopmentPage create_Project(String projectName, String projectType, String projectDescription ) throws InterruptedException {
+    public TestDevlopmentPage create_Project(String projectName, String projectType, String projectDescription ){
         enterIntoElement(name,projectName);
         clickOnElement(projectType_Dropdown);
         for( WebElement type: projectTypes ){
@@ -83,8 +85,9 @@ public class CreateProjectPage extends Libraries {
         clickOnElement(projectType_Dropdown);
         for(WebElement project : projectTypes){
             if(project.getText().equalsIgnoreCase(projectType)){
-                wait_elementToBeClickable(project,3);
+                wait_elementToBeClickable(project,10);
                 clickOnElement(project);
+                wait_textToBePresentInElement(projectTypeContainsText,5,projectType);
                 break;
             }
 
@@ -101,8 +104,9 @@ public class CreateProjectPage extends Libraries {
         clickOnElement(projectType_Dropdown);
         for(WebElement project : projectTypes){
             if(project.getText().equalsIgnoreCase(projectType)){
-                wait_elementToBeClickable(project,3);
+                wait_elementToBeClickable(project,10);
                 clickOnElement(project);
+                wait_textToBePresentInElement(projectTypeContainsText,5,projectType);
                 break;
             }
 
@@ -121,8 +125,9 @@ public class CreateProjectPage extends Libraries {
         clickOnElement(projectType_Dropdown);
         for(WebElement project : projectTypes){
             if(project.getText().equalsIgnoreCase(projectType)){
-                wait_elementToBeClickable(project,3);
+                wait_elementToBeClickable(project,10);
                 clickOnElement(project);
+                wait_textToBePresentInElement(projectTypeContainsText,5,projectType);;
                 break;
             }
 
@@ -140,8 +145,9 @@ public class CreateProjectPage extends Libraries {
         clickOnElement(projectType_Dropdown);
         for(WebElement project : projectTypes){
             if(project.getText().equalsIgnoreCase(projectType)){
-                wait_elementToBeClickable(project,3);
+                wait_elementToBeClickable(project,10);
                 clickOnElement(project);
+                wait_textToBePresentInElement(projectTypeContainsText,5,projectType);
                 break;
             }
 
@@ -160,8 +166,9 @@ public class CreateProjectPage extends Libraries {
         clickOnElement(projectType_Dropdown);
         for(WebElement project : projectTypes){
             if(project.getText().equalsIgnoreCase(projectType)){
-                wait_elementToBeClickable(project,3);
+                wait_elementToBeClickable(project,10);
                 clickOnElement(project);
+                wait_textToBePresentInElement(projectTypeContainsText,5,projectType);
                 break;
             }
 
@@ -180,8 +187,9 @@ public class CreateProjectPage extends Libraries {
         clickOnElement(projectType_Dropdown);
         for(WebElement project : projectTypes){
             if(project.getText().equalsIgnoreCase(projectType)){
-                wait_elementToBeClickable(project,3);
+                wait_elementToBeClickable(project,10);
                 clickOnElement(project);
+                wait_textToBePresentInElement(projectTypeContainsText,5,projectType);
                 break;
             }
 
@@ -200,8 +208,9 @@ public class CreateProjectPage extends Libraries {
         clickOnElement(projectType_Dropdown);
         for(WebElement project : projectTypes){
             if(project.getText().equalsIgnoreCase(projectType)){
-                wait_elementToBeClickable(project,3);
+                wait_elementToBeClickable(project,10);
                 clickOnElement(project);
+                wait_textToBePresentInElement(projectTypeContainsText,5,projectType);
                 break;
             }
 

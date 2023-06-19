@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -31,7 +32,7 @@ wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contain
     }
 
     public void wait_elementToBeClickable(WebElement element, int waitSeconds){
-       wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+       wait = new WebDriverWait(driver,Duration.ofSeconds(waitSeconds));
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
@@ -44,6 +45,11 @@ wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contain
     public void wait_Element_To_Be_Visual(WebElement element, int waitSeconds){
         wait = new WebDriverWait(driver,Duration.ofSeconds(waitSeconds));
         wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public void wait_InVisualityOfElement(WebElement element,int waitSeconds){
+        wait = new WebDriverWait(driver,Duration.ofSeconds(waitSeconds));
+        wait.until(ExpectedConditions.invisibilityOf(element));
     }
 
 
@@ -77,11 +83,11 @@ wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contain
     public WebElement avoidStalenessOfWebElement(WebElement element){
         WebElement element1 = null;
         boolean outcome = false;
-        int count =0;
-    while(count <=5 ){
+        int count =1;
+    while(count <=5){
         try{
       element1 = element;
-      mouse_Hover_Action(element1).build().perform();
+            wait_elementToBeClickable(element,5);
             outcome= true;
             break;
         }
