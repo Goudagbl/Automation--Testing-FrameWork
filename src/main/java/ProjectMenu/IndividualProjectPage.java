@@ -82,6 +82,7 @@ public WebDriver driver;
 
 
     public void navigate_ToProjectsListPage(){
+        wait_elementToBeClickable(selectedProject_leftnav,3);
         clickOnElement(selectedProject_leftnav);
         clickOnElement(allProjectsOption);
        // driver.navigate().refresh();

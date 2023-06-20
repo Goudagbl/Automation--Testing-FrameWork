@@ -15,6 +15,8 @@ import java.util.List;
 public class Libraries {
    public WebDriver driver;
     public WebDriverWait wait;
+
+    JavascriptExecutor js;
     public Libraries(WebDriver driver){
         this.driver=driver;
     }
@@ -110,5 +112,16 @@ wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contain
         wait.until(ExpectedConditions.attributeContains(element,attributeName,attributeValue));
     }
 
+
+
+    public  void waitForPageLoad() {
+         String pageLoadStatus = null;
+        do {
+            js = (JavascriptExecutor) driver;
+            pageLoadStatus = (String)js.executeScript("return document.readyState");
+            System.out.println(pageLoadStatus);
+        } while (!pageLoadStatus.equals("complete") );
+        System.out.println("Page Loaded.");
+    }
 
 }

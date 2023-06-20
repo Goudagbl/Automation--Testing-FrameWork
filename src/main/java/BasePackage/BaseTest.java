@@ -41,7 +41,7 @@ public class BaseTest {
             options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
             driver = new ChromeDriver(options);
             driver.manage().window().maximize();
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+           // driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         }
         else if(Browser.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup();
@@ -63,12 +63,11 @@ public class BaseTest {
     }
 
 
-    public String randomNumberGenerator(){
+    public String randomStringGenerator(){
         /*double randomNumber  = Math.random();
         int sizeofNum = (int) (randomNumber *1000);
         return sizeofNum ;
         */
-
         // create a string of all characters
         String alphabet = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnPpQqRrSsTtUuVvWwXxYyZz";
         // create random string builder

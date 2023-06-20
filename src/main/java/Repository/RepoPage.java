@@ -2,6 +2,7 @@ package Repository;
 
 import BasePackage.Libraries;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -65,8 +66,6 @@ public class RepoPage extends Libraries {
     @FindBy(xpath = "//div[@class='popup-input-bg']//p")
     WebElement selectedPage;
 
-
-
     @FindBy(xpath = "//span[text()='Create']")
     WebElement pageCreateButton;
     @FindBy(xpath = " //button[@title='Add Page']")
@@ -81,7 +80,11 @@ public class RepoPage extends Libraries {
     WebElement addFromSharedElement;
 
     //h2[@class='title']
+    @FindBy(xpath = "//h2[contains(@class,'Popup-header')]//span")
+    WebElement addFromSharedElementPopUp;
 
+    @FindBy(xpath = "//button[text()='Add']")
+    WebElement addAsElement;
     @FindBy(xpath = "//h2[@class='title']")
     WebElement CreateElementPopupHeaderText;
 
@@ -115,8 +118,16 @@ public class RepoPage extends Libraries {
     @FindBy(xpath = "//span[text()='Create']")
     WebElement elementCreateButton;
 
-    @FindBy(xpath = "//*[@id='account_tree_black_48dp']")
-    WebElement elementExpandIcon;
+    @FindBy(xpath = "//button[@title='Expand All Pages']")
+    WebElement pageExpander;
+
+    @FindBy(xpath = "//span[@class='fancytree-title ']")
+    List<WebElement> createdPages;
+
+    @FindBy(xpath = "//span[@class='fancytree-title tree-folder-title-repo-module-width']")
+    List<WebElement> createdElements;
+
+
 
     // below dropdown for to access shared elements & Projects elements
     @FindBy(xpath = "//img[contains(@alt,'DropDownArrow')]")
@@ -133,6 +144,17 @@ public class RepoPage extends Libraries {
 
     @FindBy(xpath = "//div[contains(@class,'message')]")
     WebElement repoTosterMessage;
+
+    @FindBy(xpath = "//div[contains(@class, 'title-trim')]")
+    WebElement editElementPopUp;
+    @FindBy(xpath = "//input[@name='elementName']")
+    WebElement name;
+
+    @FindBy(xpath = "//span[text()='Update']")
+    WebElement update;
+
+
+
 
 
 
@@ -274,18 +296,32 @@ public class RepoPage extends Libraries {
 
     }
 
+    public void navigateToFromSharedElementPopUp(String CreatedPage){
+        wait_elementToBeClickable(driver.findElement(By.xpath("//span[@class='fancytree-title ' and text()='"+CreatedPage+"']")),5);
+        mouse_Hover_Action(driver.findElement(By.xpath("//span[@class='fancytree-title ' and text()='"+CreatedPage+"']"))).build().perform();
+        WebElement add = driver.findElement(By.xpath("//span[@class='fancytree-title ' and text()='"+CreatedPage+"']/..//button[@class='add-btn']"));
+        clickOnElement(add);
+        wait_elementToBeClickable(addElementButton,3);
+        mouse_Hover_Action(addElementButton).click().build().perform();
+        wait_elementToBeClickable(addFromSharedElement,3);
+        mouse_Hover_Action(addFromSharedElement).click().build().perform();
+
+
+    }
+
 
     public void shareElement(String pageName,String eleName, String elementType){
         // wait_elementToBeClickable(elementExpandIcon,5);
-       clickOnElement(elementExpandIcon);
+      // clickOnElement(elementExpandIcon);
        WebElement pageExpandIcon = driver.findElement(By.xpath("//span[text()='"+pageName+"']/../preceding-sibling :: span[@class='fancytree-expander']"));
+       wait_elementToBeClickable(pageExpandIcon,3);
        mouse_Hover_Action(pageExpandIcon).click().build().perform();
-       wait_Element_To_Be_Visual(driver.findElement(By.xpath("//span[text()='"+eleName+"']")),5);
+       wait_Element_To_Be_Visual(driver.findElement(By.xpath("//span[text()='"+eleName+"']")),3);
        WebElement shareIcon = driver.findElement(By.xpath("//span[text()='"+eleName+"']/../../..//span[@class='slider round']"));
        wait_elementToBeClickable(shareIcon,5);
        clickOnElement(shareIcon);
-       wait_Element_To_Be_Visual(repoTosterMessage,15);
-      // wait_textToBePresentInElement(repoTosterMessage,10,eleName + " " +elementType+ " has been shared to shared elements page successfully");
+       wait_Element_To_Be_Visual(repoTosterMessage,10);
+        Assert.assertEquals(repoTosterMessage.getText(),elementType + " has been shared to shared elements page successfully");
         wait_InVisualityOfElement(repoTosterMessage,10);
        clickOnElement(elementsDropdown);
        wait_Elements_To_Be_Visual(projectElementsAndSharedElementOptions,2);
@@ -323,27 +359,86 @@ public class RepoPage extends Libraries {
         }
         clickOnElement(rootPageRadioButton);
         wait_elementToBeClickable(selectButton,3);
+        clickOnElement(selectButton);
         Assert.assertEquals(selectedPage.getText(),parentPage);
         clickOnElement(pageCreateButton);
         Assert.assertEquals(repoTosterMessage.getText(),pageName + " Page created successfully");
     }
 
-    public void addElementFromSharedElement(String pageName,String PageDescription,String parentPage){
+    public void createSubPage(String createdPage,String pageName, String ExpectedPageDescription){
+        wait_elementToBeClickable(driver.findElement(By.xpath("//span[@class='fancytree-title ' and text()='"+createdPage+"']")),5);
+        mouse_Hover_Action(driver.findElement(By.xpath("//span[@class='fancytree-title ' and text()='"+createdPage+"']"))).build().perform();
+        WebElement add = driver.findElement(By.xpath("//span[@class='fancytree-title ' and text()='"+createdPage+"']/..//button[@class='add-btn']"));
+        clickOnElement(add);
+        wait_elementToBeClickable(addPageButton,3);
+        clickOnElement(addPageButton);
+        Assert.assertEquals(createPagePopup.getText(),"Create Page");
+        enterIntoElement(pageNameTextField,pageName);
+        enterIntoElement(pageDescription,ExpectedPageDescription);
+        Assert.assertEquals(selectedPage.getText(),createdPage);
+        clickOnElement(pageCreateButton);
+        wait_Element_To_Be_Visual(repoTosterMessage,5);
+        Assert.assertEquals(repoTosterMessage.getText(),pageName + " Page created successfully");
+    }
+
+
+
+    public void addElementFromSharedElement(String pageName,String PageDescription,String parentPage,String eleName){
         clickOnElement(elementsDropdown);
         wait_Elements_To_Be_Visual(projectElementsAndSharedElementOptions,3);
         for(WebElement option : projectElementsAndSharedElementOptions){
             if(option.getText().contains("Project Elements")){
                 clickOnElement(option);
                 break;
-
             }
         }
-        Assert.assertEquals(projectElements.getText(),"Project Elements");
+       if(projectElements.getText().contains("Project Elements")){
+           Assert.assertTrue(true);
+       }else {
+           Assert.assertTrue(false);
+       }
         wait_elementToBeClickable(addPage,5);
         createPageByChosePage(pageName,PageDescription,parentPage);
+        navigateToFromSharedElementPopUp(pageName);
+        Assert.assertEquals(addFromSharedElementPopUp.getText(),"Add from Shared Elements");
+        WebElement elementNeedToBeShare = driver.findElement(By.xpath("//div[text()='"+eleName+"']/../preceding-sibling:: td//input[@type='checkbox']"));
+        mouse_Hover_Action(elementNeedToBeShare).click().build().perform();
+        wait_elementToBeClickable(addAsElement,2);
+        clickOnElement(addAsElement);
+    }
 
 
 
+    public void editAnElement(String pageName,String eleName){
+
+        for(WebElement page : createdPages){
+            if(page.getText().equalsIgnoreCase(pageName)){
+              clickOnElement(pageExpander);
+              wait_Elements_To_Be_Visual(createdElements,3);
+              for(WebElement element :createdElements){
+                  if(element.getText().equalsIgnoreCase(eleName)){
+                      mouse_Hover_Action(element).build().perform();
+                      driver.findElement(By.xpath("//span[text()='"+eleName+"']/../../..//button[@title='Edit']")).click();
+                      break;
+                  }
+              }
+              break;
+
+            }
+
+
+        }
+        wait_Element_To_Be_Visual(editElementPopUp,3);
+       if(editElementPopUp.getText().contains("Edit Element")){
+           Assert.assertTrue(true);
+       }else{
+           Assert.assertTrue(false);
+       }
+       name.sendKeys(Keys.chord(Keys.CONTROL,"a",Keys.DELETE));
+       enterIntoElement(name, eleName + "s");
+       clickOnElement(update);
+       wait_Element_To_Be_Visual(repoTosterMessage,4);
+       Assert.assertEquals(repoTosterMessage.getText(),eleName + "s textfield updated successfully");
 
 
     }

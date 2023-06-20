@@ -17,63 +17,63 @@ import java.util.List;
 
 public class ProjectMenu extends BaseTest {
 
-     String webProjectName = "Ajio-" + randomNumberGenerator();
+     String webProjectName = "Ajio-" + randomStringGenerator();
      String projectType = "Web";
      String wProjectDescription = "This web type of project ";
 
-    String webserviceName = "postman-" +randomNumberGenerator();
+    String webserviceName = "postman-" +randomStringGenerator();
     String webServiceprojectType = "Web Services";
     String webServiceprojectDescription = "This Web Services type of project ";
 
 
-    String salesforceName = "CRM-"+ randomNumberGenerator();
+    String salesforceName = "CRM-"+ randomStringGenerator();
     String salesforceprojectType = "Salesforce";
     String salesforceprojectDescription = "This  salesforce type of project ";
 
-    String nativeAndroidProjectName = "PhoneAndroid-"+ randomNumberGenerator();
+    String nativeAndroidProjectName = "PhoneAndroid-"+ randomStringGenerator();
     String nativeAndroidProjectType = "Mobile";
     String nativeAndroidProjectDescription = "This nativeAndroidProject type of project ";
 
 
 
-    String nativeIosProjectName = "PhoneIos-"+ randomNumberGenerator();
+    String nativeIosProjectName = "PhoneIos-"+ randomStringGenerator();
     String nativeIosProjectType = "Mobile";
     String nativeIosProjectDescription = "This nativeIosProject type of project ";
 
-    String nativeAndroidAndIosProjectName = "PhoneoIos-"+ randomNumberGenerator();
+    String nativeAndroidAndIosProjectName = "PhoneoIos-"+ randomStringGenerator();
     String nativeAndroidAndIosProjectType = "Mobile";
     String nativeAndroidAndIosDescription = "This  nativeAndroidAndIos type of project ";
 
 
 
-   String  hybridAndroidProjectName = "bookMy-"+ randomNumberGenerator();
+   String  hybridAndroidProjectName = "bookMy-"+ randomStringGenerator();
    String  hybridAndroidProjectType = "Mobile" ;
     String hybridAndroidProjectDescription = "This hybrid Android type of project" ;
 
-    String  hybridIosProjectName = "bookMy-"+ randomNumberGenerator();
+    String  hybridIosProjectName = "bookMy-"+ randomStringGenerator();
     String  hybridIosProjectType = "Mobile" ;
     String hybridIosProjectDescription = "This hybrid Ios  type of project" ;
 
 
-    String  hybridAndroidAndIosProjectName = "bookMy-" +randomNumberGenerator();
+    String  hybridAndroidAndIosProjectName = "bookMy-" +randomStringGenerator();
     String  hybridAndroidAndIosProjectType = "Mobile" ;
     String hybridAndroidAndIosProjectDescription = "This hybrid Android And Ios  type of project" ;
 
 
-    String WebMobileprojectName = "Cultfit-"+ randomNumberGenerator();
+    String WebMobileprojectName = "Cultfit-"+ randomStringGenerator();
     String  WebMobileProjectType = "Web & Mobile" ;
 
     String WebandMobileProjectDescription = "This Web and Mobile of project";
 
 
 
-    String emailId = "Gouda" + randomNumberGenerator()+"@gmail.com";
+    String emailId = "Gouda" + randomStringGenerator()+"@gmail.com";
 
     String privilegeType = "Admin";
 
-    String userName = "Gouda" +randomNumberGenerator();
+    String userName = "Gouda" +randomStringGenerator();
 
-    String roleValue = "SystemAdmin" + randomNumberGenerator();
+    String roleValue = "SystemAdmin" + randomStringGenerator();
 
 
 

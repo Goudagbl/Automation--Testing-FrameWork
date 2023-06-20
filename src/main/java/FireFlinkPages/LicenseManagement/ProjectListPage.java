@@ -108,7 +108,8 @@ public class ProjectListPage extends Libraries {
    }
 
    public EditProjectPage navigateToEditProjectPage(String createdProjectName){
-        try {
+
+       try {
             wait_Elements_To_Be_Visual(projectsList, 5);
         }
         catch (StaleElementReferenceException exe){

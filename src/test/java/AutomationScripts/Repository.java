@@ -2,6 +2,7 @@ package AutomationScripts;
 
 import BasePackage.BaseTest;
 import FireFlinkPages.LicenseManagement.ProjectListPage;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -12,32 +13,32 @@ import ProjectMenu.EditProjectPage;
 import Repository.RepoPage;
 
 public class Repository extends BaseTest {
-    String webProjectName = "Ajio-" + randomNumberGenerator();
+    String webProjectName = "Ajio-" + randomStringGenerator();
     String projectType = "Web";
     String wProjectDescription = "This web type of project ";
 
-    String page = "Page-" + randomNumberGenerator();
+    String page = "Page-" + randomStringGenerator();
     String pageDescription = "Simple Description of " + page;
-    String screen = "screen-" + randomNumberGenerator();
+    String screen = "screen-" + randomStringGenerator();
 
     String screenDescription = "Simple Description of " + screen;
 
 
 
 
-    String mobileProjectName = "Flipkart-" + randomNumberGenerator();
+    String mobileProjectName = "Flipkart-" + randomStringGenerator();
     String MprojectType = "Mobile";
     String MProjectDescription = "This Native&Android type of project ";
 
 
-    String WebMobileprojectName = "Cultfit-"+ randomNumberGenerator();
+    String WebMobileprojectName = "Cultfit-"+ randomStringGenerator();
     String  WebMobileProjectType = "Web & Mobile" ;
 
     String WebandMobileProjectDescription = "This Web and Mobile of project";
 
 
 
-    String eleName = "element-" + randomNumberGenerator();
+    String eleName = "element-" + randomStringGenerator();
     String elementType= "textfield";
     String locatorType = "Xpath";
     String valueType = "static";
@@ -131,9 +132,44 @@ public class Repository extends BaseTest {
         RepoPage repo = plist.navigateToRepository();
         repo.createPageForWebAndAddElement(page,pageDescription,eleName,elementType,locatorType,valueType,locatorValue);
         repo.shareElement(page,eleName,elementType);
-        repo.addElementFromSharedElement(page,pageDescription,"Root Page");
+        repo.addElementFromSharedElement(randomStringGenerator(),pageDescription,"Root Page",eleName);
+        iproject.navigate_ToProjectsListPage();
+        EditProjectPage editProject = plist.navigateToEditProjectPage(webProjectName);
+        editProject.closeProject(webProjectName + " Project updated successfully");
+        plist.deleteProject(webProjectName, webProjectName + " Project deleted successfully");
 
+    }
 
+    @Test
+    public  void verify_UserAble_to_AddSubpageForCreatedPage(){
+        ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
+        CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
+        Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        TestDevlopmentPage testDev = createPro.create_Project(webProjectName,projectType,wProjectDescription);
+        testDev.validate_userNavigated_TestDevSection("Scripts");
+        IndividualProjectPage iproject = plist.navigate_Individual_ProjectSection();
+        iproject.validate_Created_Project(webProjectName,projectType);
+        RepoPage repo = plist.navigateToRepository();
+        repo.createPageForWebAndAddElement(page,pageDescription,eleName,elementType,locatorType,valueType,locatorValue);
+        repo.createSubPage(page,randomStringGenerator(),pageDescription);
+        iproject.navigate_ToProjectsListPage();
+        EditProjectPage editProject = plist.navigateToEditProjectPage(webProjectName);
+        editProject.closeProject(webProjectName + " Project updated successfully");
+        plist.deleteProject(webProjectName, webProjectName + " Project deleted successfully");
+    }
+
+    @Test
+    public void verify_UserAble_to_EditAnElement(){
+        ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
+        CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
+        Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        TestDevlopmentPage testDev = createPro.create_Project(webProjectName,projectType,wProjectDescription);
+        testDev.validate_userNavigated_TestDevSection("Scripts");
+        IndividualProjectPage iproject = plist.navigate_Individual_ProjectSection();
+        iproject.validate_Created_Project(webProjectName,projectType);
+        RepoPage repo = plist.navigateToRepository();
+        repo.createPageForWebAndAddElement(page,pageDescription,eleName,elementType,locatorType,valueType,locatorValue);
+        repo.editAnElement(page,eleName);
     }
 
 
