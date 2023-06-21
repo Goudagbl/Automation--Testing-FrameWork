@@ -68,7 +68,7 @@ public class RepoPage extends Libraries {
 
     @FindBy(xpath = "//span[text()='Create']")
     WebElement pageCreateButton;
-    @FindBy(xpath = " //button[@title='Add Page']")
+    @FindBy(xpath = " //div[contains(@class,'menu-item')]//button")
     WebElement addPageButton;
 
     @FindBy(xpath = "//button[text()='Add Element']")
@@ -118,16 +118,16 @@ public class RepoPage extends Libraries {
     @FindBy(xpath = "//span[text()='Create']")
     WebElement elementCreateButton;
 
-    @FindBy(xpath = "//button[@title='Expand All Pages']")
+    @FindBy(xpath = "//span[contains(@class,' absolute')]")
     WebElement pageExpander;
 
+    //button[contains(@class,'exapnd-all-btn')]
     @FindBy(xpath = "//span[@class='fancytree-title ']")
     List<WebElement> createdPages;
 
+    //below X-path fetching all elements of repository not on page basis
     @FindBy(xpath = "//span[@class='fancytree-title tree-folder-title-repo-module-width']")
     List<WebElement> createdElements;
-
-
 
     // below dropdown for to access shared elements & Projects elements
     @FindBy(xpath = "//img[contains(@alt,'DropDownArrow')]")
@@ -152,6 +152,18 @@ public class RepoPage extends Libraries {
 
     @FindBy(xpath = "//span[text()='Update']")
     WebElement update;
+
+
+    @FindBy(xpath = "//h3[contains(@id,'headlessui-dialog-title')]")
+    WebElement deleteWarningPopUp;
+
+    @FindBy(xpath = "//button[text()='Delete']")
+    WebElement deleteButton;
+
+    @FindBy(xpath = "//span[@class='fancytree-title ']/../../..//button[@title='Edit']")
+    List <WebElement> pageEditIcon;
+
+
 
 
 
@@ -267,13 +279,12 @@ public class RepoPage extends Libraries {
     }
 
 
-    public void createPageAndScreenForWebAndMobileProject(String pageName, String ExpectedPageDescription,String eleName,String elementType, String locatorType,String valueType, String locatorValue,String ExpectedAndroidScreenName,String ExpectedAndroidScreenNameDescription) throws InterruptedException {
+    public void createPageAndScreenForWebAndMobileProject(String pageName, String ExpectedPageDescription,String eleName,String elementType, String locatorType,String valueType, String locatorValue,String ExpectedAndroidScreenName,String ExpectedAndroidScreenNameDescription)  {
        clickOnElement(pageDropDown);
        clickOnElement(webType);
-        createPageForWebAndAddElement(pageName,ExpectedPageDescription,eleName,elementType,locatorType,valueType, locatorValue);
+       createPageForWebAndAddElement(pageName,ExpectedPageDescription,eleName,elementType,locatorType,valueType, locatorValue);
        wait_elementToBeClickable(pageDropDown,5);
        mouse_Hover_Action(pageDropDown).build().perform();
-        Thread.sleep(5000);
        clickOnElement(pageDropDown);
        clickOnElement(androidType);
         wait_elementToBeClickable(addScreen,5);
@@ -314,7 +325,7 @@ public class RepoPage extends Libraries {
         // wait_elementToBeClickable(elementExpandIcon,5);
       // clickOnElement(elementExpandIcon);
        WebElement pageExpandIcon = driver.findElement(By.xpath("//span[text()='"+pageName+"']/../preceding-sibling :: span[@class='fancytree-expander']"));
-       wait_elementToBeClickable(pageExpandIcon,3);
+       wait_elementToBeClickable(pageExpandIcon,5);
        mouse_Hover_Action(pageExpandIcon).click().build().perform();
        wait_Element_To_Be_Visual(driver.findElement(By.xpath("//span[text()='"+eleName+"']")),3);
        WebElement shareIcon = driver.findElement(By.xpath("//span[text()='"+eleName+"']/../../..//span[@class='slider round']"));
@@ -365,20 +376,20 @@ public class RepoPage extends Libraries {
         Assert.assertEquals(repoTosterMessage.getText(),pageName + " Page created successfully");
     }
 
-    public void createSubPage(String createdPage,String pageName, String ExpectedPageDescription){
+    public void createSubPage(String createdPage,String createPagePopupText, String pageName, String ExpectedPageDescription){
         wait_elementToBeClickable(driver.findElement(By.xpath("//span[@class='fancytree-title ' and text()='"+createdPage+"']")),5);
         mouse_Hover_Action(driver.findElement(By.xpath("//span[@class='fancytree-title ' and text()='"+createdPage+"']"))).build().perform();
         WebElement add = driver.findElement(By.xpath("//span[@class='fancytree-title ' and text()='"+createdPage+"']/..//button[@class='add-btn']"));
         clickOnElement(add);
         wait_elementToBeClickable(addPageButton,3);
         clickOnElement(addPageButton);
-        Assert.assertEquals(createPagePopup.getText(),"Create Page");
+        Assert.assertEquals(createPagePopup.getText(),createPagePopupText);
         enterIntoElement(pageNameTextField,pageName);
         enterIntoElement(pageDescription,ExpectedPageDescription);
         Assert.assertEquals(selectedPage.getText(),createdPage);
         clickOnElement(pageCreateButton);
         wait_Element_To_Be_Visual(repoTosterMessage,5);
-        Assert.assertEquals(repoTosterMessage.getText(),pageName + " Page created successfully");
+        Assert.assertEquals(repoTosterMessage.getText(),pageName + " Screen created successfully");
     }
 
 
@@ -419,29 +430,83 @@ public class RepoPage extends Libraries {
                   if(element.getText().equalsIgnoreCase(eleName)){
                       mouse_Hover_Action(element).build().perform();
                       driver.findElement(By.xpath("//span[text()='"+eleName+"']/../../..//button[@title='Edit']")).click();
+                      wait_Element_To_Be_Visual(editElementPopUp,3);
+                      if(editElementPopUp.getText().contains("Edit Element")){
+                          Assert.assertTrue(true);
+                      }else{
+                          Assert.assertTrue(false);
+                      }
+                      name.sendKeys(Keys.chord(Keys.CONTROL,"a",Keys.DELETE));
+                      enterIntoElement(name, eleName + "s");
+                      clickOnElement(update);
+                      wait_Element_To_Be_Visual(repoTosterMessage,4);
+                      Assert.assertEquals(repoTosterMessage.getText(),eleName + "s textfield updated successfully");
                       break;
                   }
               }
-              break;
+
+                break;
 
             }
 
 
         }
-        wait_Element_To_Be_Visual(editElementPopUp,3);
-       if(editElementPopUp.getText().contains("Edit Element")){
-           Assert.assertTrue(true);
-       }else{
-           Assert.assertTrue(false);
-       }
-       name.sendKeys(Keys.chord(Keys.CONTROL,"a",Keys.DELETE));
-       enterIntoElement(name, eleName + "s");
-       clickOnElement(update);
-       wait_Element_To_Be_Visual(repoTosterMessage,4);
-       Assert.assertEquals(repoTosterMessage.getText(),eleName + "s textfield updated successfully");
+
 
 
     }
 
+    public void deleteAnElement(String pageName,String eleName, String elementType) {
+        for(WebElement page : createdPages){
+            if(page.getText().equalsIgnoreCase(pageName)){
+                WebElement pageExpandIcon = driver.findElement(By.xpath("//span[text()='"+pageName+"']/../preceding-sibling :: span[@class='fancytree-expander']"));
+                wait_elementToBeClickable(pageExpandIcon,3);
+                mouse_Hover_Action(pageExpandIcon).click().build().perform();
+                wait_Elements_To_Be_Visual(createdElements,3);
+                for(WebElement elementNeedTobeDelete :createdElements){
+                    if(elementNeedTobeDelete.getText().equalsIgnoreCase(eleName)){
+                        mouse_Hover_Action(elementNeedTobeDelete).build().perform();
+                         WebElement element= driver.findElement(By.xpath("//span[text()='"+eleName+"']/../../..//button[@title='Delete']"));
+                         wait_elementToBeClickable(element,3);
+                         clickOnElement(element);
+                         wait_Element_To_Be_Visual(deleteWarningPopUp,3);
+                         Assert.assertEquals(deleteWarningPopUp.getText(),"Warning\n" +
+                                 "Delete");
+                         clickOnElement(deleteButton);
+                         wait_Element_To_Be_Visual(repoTosterMessage,5);
+                         Assert.assertEquals(repoTosterMessage.getText(),eleName + " " + elementType + " deleted successfully");
+                         break;
+
+                    }
+                }
+                break;
+            }
+
+
+        }
+
+    }
+
+
+    public void deleteCreatedPage(String pageName){
+        wait_Element_To_Be_Visual(pageExpander,5);
+        clickOnElement(pageExpander);
+        wait_Elements_To_Be_Visual(createdPages,5);
+        for(WebElement page : createdPages){
+            if(page.getText().equalsIgnoreCase(pageName)){
+                mouse_Hover_Action(page).build().perform();
+                WebElement pageNeedTobeDeleted = driver.findElement(By.xpath("//span[text()='"+pageName+"']/../../..//button[@title='Delete']"));
+                //span[text()='"+pageName+"']/../../..//button[@title='Edit']
+                clickOnElement(pageNeedTobeDeleted);
+                wait_Element_To_Be_Visual(deleteButton,3);
+                clickOnElement(deleteButton);
+                wait_Element_To_Be_Visual(repoTosterMessage,5);
+
+
+            }
+        }
+
+
+    }
 
 }
