@@ -2,7 +2,6 @@ package AutomationScripts;
 
 import BasePackage.BaseTest;
 import FireFlinkPages.LicenseManagement.ProjectListPage;
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -12,6 +11,8 @@ import ProjectMenu.TestDevlopmentPage;
 import ProjectMenu.IndividualProjectPage;
 import ProjectMenu.EditProjectPage;
 import Repository.RepoPage;
+import Repository.StepGroupsPage;
+
 
 public class Repository extends BaseTest {
     String webProjectName = "Ajio-" + randomStringGenerator();
@@ -45,6 +46,12 @@ public class Repository extends BaseTest {
     String valueType = "static";
     String locatorValue = "//span[text()='Create']";
 
+    String parentLibrary = "Root Library";
+
+    String stepGroupType = "Web";
+
+    String stepGroupDescription = "webType of stepGroup this is ";
+
 
 
     @Test
@@ -52,6 +59,7 @@ public class Repository extends BaseTest {
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String webProjectName = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.create_Project(webProjectName,projectType,wProjectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iproject = plist.navigate_Individual_ProjectSection();
@@ -71,6 +79,7 @@ public class Repository extends BaseTest {
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String mobileProjectName = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.createNativeAndroidProject(mobileProjectName,MprojectType,MProjectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iproject = plist.navigate_Individual_ProjectSection();
@@ -89,6 +98,7 @@ public class Repository extends BaseTest {
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String WebMobileprojectName = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.createWebAndMobileProject(WebMobileprojectName,WebMobileProjectType,WebandMobileProjectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iProject = plist.navigate_Individual_ProjectSection();
@@ -96,6 +106,7 @@ public class Repository extends BaseTest {
         RepoPage repo = plist.navigateToRepository();
         repo.createPageAndScreenForWebAndMobileProject(page,pageDescription,eleName,elementType,locatorType,valueType,locatorValue,screen,screenDescription);
         iProject.navigate_ToProjectsListPage();
+
         EditProjectPage editProject = plist.navigateToEditProjectPage(webProjectName);
         editProject.closeProject(webProjectName + " Project updated successfully");
         plist.deleteProject(webProjectName, webProjectName + " Project deleted successfully");
@@ -107,6 +118,7 @@ public class Repository extends BaseTest {
      ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
      CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
      Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+     String webProjectName = randomStringGenerator();
      TestDevlopmentPage testDev = createPro.create_Project(webProjectName,projectType,wProjectDescription);
      testDev.validate_userNavigated_TestDevSection("Scripts");
      IndividualProjectPage iproject = plist.navigate_Individual_ProjectSection();
@@ -126,6 +138,7 @@ public class Repository extends BaseTest {
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String webProjectName = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.create_Project(webProjectName,projectType,wProjectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iproject = plist.navigate_Individual_ProjectSection();
@@ -146,13 +159,14 @@ public class Repository extends BaseTest {
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String  webProjectName = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.create_Project(webProjectName,projectType,wProjectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iproject = plist.navigate_Individual_ProjectSection();
         iproject.validate_Created_Project(webProjectName,projectType);
         RepoPage repo = plist.navigateToRepository();
         repo.createPageForWebAndAddElement(page,pageDescription,eleName,elementType,locatorType,valueType,locatorValue);
-        repo.createSubPage(page,"Create Page",randomStringGenerator(),pageDescription);
+        repo.createSubPage(page,"Create Page",randomStringGenerator(),pageDescription,"Page created successfully");
         iproject.navigate_ToProjectsListPage();
         EditProjectPage editProject = plist.navigateToEditProjectPage(webProjectName);
         editProject.closeProject(webProjectName + " Project updated successfully");
@@ -164,6 +178,7 @@ public class Repository extends BaseTest {
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String  webProjectName = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.create_Project(webProjectName,projectType,wProjectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iproject = plist.navigate_Individual_ProjectSection();
@@ -182,6 +197,7 @@ public class Repository extends BaseTest {
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String  mobileProjectName = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.createNativeAndroidProject(mobileProjectName,MprojectType,MProjectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iproject = plist.navigate_Individual_ProjectSection();
@@ -189,7 +205,12 @@ public class Repository extends BaseTest {
         RepoPage repo = plist.navigateToRepository();
         repo.createScreenForMobileAndAddElement(screen,eleName,elementType,locatorType,valueType,locatorValue,screenDescription);
         repo.deleteAnElement(screen,eleName,elementType);
+        iproject.navigate_ToProjectsListPage();
+        EditProjectPage editProject = plist.navigateToEditProjectPage(webProjectName);
+        editProject.closeProject(webProjectName + " Project updated successfully");
+        plist.deleteProject(webProjectName, webProjectName + " Project deleted successfully");
     }
+
 
 
     @Test
@@ -197,6 +218,29 @@ public class Repository extends BaseTest {
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String  WebMobileprojectName = randomStringGenerator();
+        TestDevlopmentPage testDev = createPro.createWebAndMobileProject(WebMobileprojectName,WebMobileProjectType,WebandMobileProjectDescription);
+        testDev.validate_userNavigated_TestDevSection("Scripts");
+        IndividualProjectPage iProject = plist.navigate_Individual_ProjectSection();
+        iProject.validate_Created_Project(WebMobileprojectName,WebMobileProjectType);
+        RepoPage repo = plist.navigateToRepository();
+        repo.createPageAndScreenForWebAndMobileProject(page,pageDescription,eleName,elementType,locatorType,valueType,locatorValue,screen,screenDescription);
+        String subScreen = randomStringGenerator();
+        repo.createSubPage(screen,"Create Screen",subScreen,pageDescription,"Screen created successfully");
+        repo.editCreatedPage(subScreen,"Edit Screen - " + subScreen, subScreen + "s Screen updated successfully");
+        iProject.navigate_ToProjectsListPage();
+        EditProjectPage editProject = plist.navigateToEditProjectPage(webProjectName);
+        editProject.closeProject(webProjectName + " Project updated successfully");
+        plist.deleteProject(webProjectName, webProjectName + " Project deleted successfully");
+    }
+
+
+    @Test
+    public void verify_UserAble_to_DeleteCreatedPage(){
+        ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
+        CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
+        Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String  WebMobileprojectName = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.createWebAndMobileProject(WebMobileprojectName,WebMobileProjectType,WebandMobileProjectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iProject = plist.navigate_Individual_ProjectSection();
@@ -204,12 +248,62 @@ public class Repository extends BaseTest {
         RepoPage repo = plist.navigateToRepository();
         repo.createPageAndScreenForWebAndMobileProject(page,pageDescription,eleName,elementType,locatorType,valueType,locatorValue,screen,screenDescription);
         String subpage = randomStringGenerator();
-        repo.createSubPage(screen,"Create Screen",subpage,pageDescription);
+        repo.createSubPage(screen,"Create Screen",subpage,pageDescription,"Screen created successfully");
         repo.deleteCreatedPage(subpage);
         WebElement repoTosterMessage = driver.findElement(By.xpath("//div[contains(@class,'message')]"));
         Assert.assertEquals(repoTosterMessage.getText().trim(),subpage + " Screen deleted successfully");
+        iProject.navigate_ToProjectsListPage();
+        EditProjectPage editProject = plist.navigateToEditProjectPage(webProjectName);
+        editProject.closeProject(webProjectName + " Project updated successfully");
+        plist.deleteProject(webProjectName, webProjectName + " Project deleted successfully");
+    }
+
+
+    @Test
+    public void verify_UserAble_to_EditSharedElement(){
+        ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
+        CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
+        Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String webProjectName = randomStringGenerator();
+        TestDevlopmentPage testDev = createPro.create_Project(webProjectName,projectType,wProjectDescription);
+        testDev.validate_userNavigated_TestDevSection("Scripts");
+        IndividualProjectPage iproject = plist.navigate_Individual_ProjectSection();
+        iproject.validate_Created_Project(webProjectName,projectType);
+        RepoPage repo = plist.navigateToRepository();
+        repo.createPageForWebAndAddElement(page,pageDescription,eleName,elementType,locatorType,valueType,locatorValue);
+        repo.shareElement(page,eleName,elementType);
+        repo.editElementFromSharedElementPage(eleName,elementType);
+        iproject.navigate_ToProjectsListPage();
+        EditProjectPage editProject = plist.navigateToEditProjectPage(webProjectName);
+        editProject.closeProject(webProjectName + " Project updated successfully");
+        plist.deleteProject(webProjectName, webProjectName + " Project deleted successfully");
+    }
+
+    @Test
+    public void verify_UserAble_to_CreateLibraryAddStepGroup(){
+        ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
+        CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
+        Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String webProjectName = randomStringGenerator();
+        TestDevlopmentPage testDev = createPro.create_Project(webProjectName,projectType,wProjectDescription);
+        testDev.validate_userNavigated_TestDevSection("Scripts");
+        IndividualProjectPage iproject = plist.navigate_Individual_ProjectSection();
+        iproject.validate_Created_Project(webProjectName,projectType);
+        RepoPage repo = plist.navigateToRepository();
+       StepGroupsPage stepGroup  = repo.navigateStepGroupsPage();
+       String libraryName =randomStringGenerator();
+       stepGroup.createLibrary(libraryName,parentLibrary);
+        stepGroup.addStepGroupTOLibrary(libraryName,randomStringGenerator(),stepGroupType,stepGroupDescription);
+        iproject.navigate_ToProjectsListPage();
+        EditProjectPage editProject = plist.navigateToEditProjectPage(webProjectName);
+        editProject.closeProject(webProjectName + " Project updated successfully");
+        plist.deleteProject(webProjectName, webProjectName + " Project deleted successfully");
 
     }
+
+
+
+
 
 
 }

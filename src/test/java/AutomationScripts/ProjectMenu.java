@@ -96,6 +96,7 @@ public class ProjectMenu extends BaseTest {
     EditProjectPage editProject = plist.navigateToEditProjectPage(webProjectName);
     editProject.closeProject(webProjectName + " Project updated successfully");
     plist.deleteProject(webProjectName, webProjectName + " Project deleted successfully");
+
     }
 
 @Test()

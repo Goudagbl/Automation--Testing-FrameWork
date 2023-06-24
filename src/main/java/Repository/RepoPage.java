@@ -9,7 +9,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
-import javax.lang.model.util.Elements;
 import java.util.List;
 
 public class RepoPage extends Libraries {
@@ -142,6 +141,9 @@ public class RepoPage extends Libraries {
     @FindBy(xpath = "//tr[@role='row']//div[contains(@class,'fontPoppinsRegularMd ')]")
    List <WebElement> listOfSharedElements;
 
+    @FindBy(xpath = "//div[contains(@class,'fontPoppinsRegularMd ')]/../..//*[contains(@aria-label,'Edit')]")
+    WebElement editIconFromSharedElement;
+
     @FindBy(xpath = "//div[contains(@class,'message')]")
     WebElement repoTosterMessage;
 
@@ -162,6 +164,17 @@ public class RepoPage extends Libraries {
 
     @FindBy(xpath = "//span[@class='fancytree-title ']/../../..//button[@title='Edit']")
     List <WebElement> pageEditIcon;
+
+  @FindBy(css = "#pageName")
+  WebElement editPageNameTextField;
+
+
+  @FindBy(xpath = "//a[text()='Step Groups']")
+  WebElement stepGroupsTab;
+
+  @FindBy(xpath = "//label[contains(@class,'project_label')]")
+  WebElement stepGroupText;
+
 
 
 
@@ -322,17 +335,16 @@ public class RepoPage extends Libraries {
 
 
     public void shareElement(String pageName,String eleName, String elementType){
-        // wait_elementToBeClickable(elementExpandIcon,5);
-      // clickOnElement(elementExpandIcon);
-       WebElement pageExpandIcon = driver.findElement(By.xpath("//span[text()='"+pageName+"']/../preceding-sibling :: span[@class='fancytree-expander']"));
-       wait_elementToBeClickable(pageExpandIcon,5);
-       mouse_Hover_Action(pageExpandIcon).click().build().perform();
-       wait_Element_To_Be_Visual(driver.findElement(By.xpath("//span[text()='"+eleName+"']")),3);
+       wait_elementToBeClickable(pageExpander,5);
+       mouse_Hover_Action(pageExpander).click().build().perform();
+        wait_Elements_To_Be_Visual(createdElements,7);
+       WebElement createdElement = driver.findElement(By.xpath("//span[text()='"+eleName+"']"));
+       wait_Element_To_Be_Visual(createdElement,5);
        WebElement shareIcon = driver.findElement(By.xpath("//span[text()='"+eleName+"']/../../..//span[@class='slider round']"));
        wait_elementToBeClickable(shareIcon,5);
        clickOnElement(shareIcon);
        wait_Element_To_Be_Visual(repoTosterMessage,10);
-        Assert.assertEquals(repoTosterMessage.getText(),elementType + " has been shared to shared elements page successfully");
+        Assert.assertEquals(repoTosterMessage.getText(),eleName + " " + elementType + " has been shared to shared elements page successfully");
         wait_InVisualityOfElement(repoTosterMessage,10);
        clickOnElement(elementsDropdown);
        wait_Elements_To_Be_Visual(projectElementsAndSharedElementOptions,2);
@@ -373,10 +385,11 @@ public class RepoPage extends Libraries {
         clickOnElement(selectButton);
         Assert.assertEquals(selectedPage.getText(),parentPage);
         clickOnElement(pageCreateButton);
+        wait_Element_To_Be_Visual(repoTosterMessage,5);
         Assert.assertEquals(repoTosterMessage.getText(),pageName + " Page created successfully");
     }
 
-    public void createSubPage(String createdPage,String createPagePopupText, String pageName, String ExpectedPageDescription){
+    public void createSubPage(String createdPage,String createPagePopupText, String pageName, String ExpectedPageDescription, String expectedTosterMessageForPagesCreation){
         wait_elementToBeClickable(driver.findElement(By.xpath("//span[@class='fancytree-title ' and text()='"+createdPage+"']")),5);
         mouse_Hover_Action(driver.findElement(By.xpath("//span[@class='fancytree-title ' and text()='"+createdPage+"']"))).build().perform();
         WebElement add = driver.findElement(By.xpath("//span[@class='fancytree-title ' and text()='"+createdPage+"']/..//button[@class='add-btn']"));
@@ -389,7 +402,8 @@ public class RepoPage extends Libraries {
         Assert.assertEquals(selectedPage.getText(),createdPage);
         clickOnElement(pageCreateButton);
         wait_Element_To_Be_Visual(repoTosterMessage,5);
-        Assert.assertEquals(repoTosterMessage.getText(),pageName + " Screen created successfully");
+        Assert.assertEquals(repoTosterMessage.getText(),pageName + " " +expectedTosterMessageForPagesCreation);
+        wait_InVisualityOfElement(repoTosterMessage,5);
     }
 
 
@@ -496,7 +510,6 @@ public class RepoPage extends Libraries {
             if(page.getText().equalsIgnoreCase(pageName)){
                 mouse_Hover_Action(page).build().perform();
                 WebElement pageNeedTobeDeleted = driver.findElement(By.xpath("//span[text()='"+pageName+"']/../../..//button[@title='Delete']"));
-                //span[text()='"+pageName+"']/../../..//button[@title='Edit']
                 clickOnElement(pageNeedTobeDeleted);
                 wait_Element_To_Be_Visual(deleteButton,3);
                 clickOnElement(deleteButton);
@@ -509,4 +522,54 @@ public class RepoPage extends Libraries {
 
     }
 
-}
+    public void editCreatedPage(String pageName, String ExpectedHeadingForEditPage,String ExpectedTosterMessageForTheEditPage) {
+        wait_Element_To_Be_Visual(pageExpander, 5);
+        clickOnElement(pageExpander);
+        wait_Elements_To_Be_Visual(createdPages, 5);
+        for (WebElement page : createdPages) {
+            if (page.getText().equalsIgnoreCase(pageName)) {
+                mouse_Hover_Action(page).build().perform();
+                WebElement pageNeedTobeEdited = driver.findElement(By.xpath("//span[text()='" + pageName + "']/../../..//button[@title='Edit']"));
+                clickOnElement(pageNeedTobeEdited);
+                wait_Element_To_Be_Visual(editElementPopUp, 2);
+                Assert.assertEquals(editElementPopUp.getText(), ExpectedHeadingForEditPage);
+                editPageNameTextField.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+                enterIntoElement(editPageNameTextField, pageName + "s");
+                clickOnElement(update);
+                wait_Element_To_Be_Visual(repoTosterMessage,5);
+                Assert.assertEquals(repoTosterMessage.getText(), ExpectedTosterMessageForTheEditPage);
+            }
+        }
+    }
+
+    public void editElementFromSharedElementPage(String eleName,String elementType){
+        wait_Elements_To_Be_Visual(listOfSharedElements,5);
+        for(WebElement shareElement : listOfSharedElements){
+            if(shareElement.getText().equalsIgnoreCase(eleName)){
+                mouse_Hover_Action(shareElement).build().perform();
+                WebElement sharedElement = driver.findElement(By.xpath("//div[text()='"+eleName+"']/../..//*[@aria-label='Edit']"));
+                clickOnElement(sharedElement);
+                Assert.assertEquals(editElementPopUp.getText(),"Edit Element - " +eleName);
+                name.sendKeys(Keys.chord(Keys.CONTROL,"a",Keys.DELETE));
+                enterIntoElement(name,eleName + "s");
+                clickOnElement(update);
+                wait_Element_To_Be_Visual(repoTosterMessage,5);
+                Assert.assertEquals(repoTosterMessage.getText(),eleName + "s" + " " + elementType +" updated successfully");
+            }
+
+        }
+
+    }
+
+    public StepGroupsPage navigateStepGroupsPage(){
+        clickOnElement(stepGroupsTab);
+        Assert.assertEquals(stepGroupText.getText(),"Step Groups");
+        StepGroupsPage sgroups = new StepGroupsPage(driver);
+        return sgroups;
+    }
+
+
+
+
+
+    }

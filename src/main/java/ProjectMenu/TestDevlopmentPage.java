@@ -23,7 +23,7 @@ public class TestDevlopmentPage extends Libraries {
     WebElement scripts;
 
     public void validate_userNavigated_TestDevSection(String expectedString){
-        wait_elementToBeClickable(addModule,5);
+        wait_elementToBeClickable(addModule,10);
         Assert.assertEquals(scripts.getText(),expectedString);
     }
 

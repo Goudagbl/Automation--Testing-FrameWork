@@ -9,10 +9,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import java.lang.Math;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.time.Duration;
@@ -41,7 +39,7 @@ public class BaseTest {
             options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
             driver = new ChromeDriver(options);
             driver.manage().window().maximize();
-           // driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+           driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         }
         else if(Browser.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup();
@@ -91,8 +89,6 @@ public class BaseTest {
 
     }
 
-
-
     @BeforeMethod(alwaysRun = true)
     public Sign_InPage setUp() throws Throwable {
         browserInitialization();
@@ -102,7 +98,6 @@ public class BaseTest {
     }
     @AfterMethod(enabled = false)
     public void tearDown(){
-
         driver.close();
     }
 

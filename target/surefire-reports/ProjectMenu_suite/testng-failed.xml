@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [ProjectMenu_suite]" guice-stage="DEVELOPMENT" verbose="0">
+  <listeners>
+    <listener class-name="BasePackage.RetryListener"/>
+    <listener class-name="BasePackage.ScreenShotListener"/>
+  </listeners>
+  <test thread-count="5" parallel="classes" name="ProjectMenu_sanity(failed)" verbose="0">
+    <classes>
+      <class name="AutomationScripts.ProjectMenu">
+        <methods>
+          <include name="verify_userAble_to_Create_SalesforceProject"/>
+          <include name="verify_userAble_to_ArchiveClosedProjectAndDelete"/>
+          <include name="verify_userUnable_to_DeleteOpenProject"/>
+          <include name="verify_userAble_to_Create_hybridAndroidAndIosMobileProject"/>
+          <include name="verify_userAble_to_ReopenWebProject"/>
+          <include name="verify_userAble_to_Create_nativeIosPMobileProject"/>
+          <include name="verify_userAble_to_Create_nativeAndroidMobileProject"/>
+          <include name="setUp"/>
+          <include name="verify_userAble_to_Create_WebserviceProject"/>
+          <include name="verify_userAble_to_Create_nativeAndroidAndIosPMobileProject"/>
+          <include name="verify_UserAble_to_EditProjectFromIndividualProjectLevel"/>
+          <include name="tearDown"/>
+          <include name="verify_userAble_to_CreateNewUser"/>
+          <include name="verify_userAble_to_Create_hybridIosMobileProject"/>
+          <include name="verify_userAble_to_Create_hybridAndroidMobileProject"/>
+          <include name="verify_QuickStart_Button"/>
+          <include name="verify_userAble_to_CreateRole"/>
+          <include name="verify_userAble_to_Create_WebProject"/>
+        </methods>
+      </class> <!-- AutomationScripts.ProjectMenu -->
+      <class name="AutomationScripts.Repository">
+        <methods>
+          <include name="verify_UserAble_to_MakeSharedElement"/>
+          <include name="verify_UserAble_to_CreateScreen_And_AddElementInMobileProject"/>
+          <include name="setUp"/>
+          <include name="verify_UserAble_to_AddSubpageForCreatedPage"/>
+          <include name="verify_UserAble_to_DeleteCreatedPage"/>
+          <include name="verify_UserAble_to_AddElementsFrom_SharedElement"/>
+          <include name="verify_UserAble_to_EditAnElement"/>
+          <include name="tearDown"/>
+          <include name="verify_UserAble_to_EditCreatedPage"/>
+          <include name="verify_UserAble_to_CreateLibraryAddStepGroup"/>
+          <include name="verify_UserAble_to_DeleteAnElement"/>
+          <include name="verify_userAble_to_CreatePage_And_AddElementInWebProject"/>
+          <include name="verify_UserAble_to_createPageAndScreenInWebAndMobileTypeProject"/>
+          <include name="verify_UserAble_to_EditSharedElement"/>
+        </methods>
+      </class> <!-- AutomationScripts.Repository -->
+    </classes>
+  </test> <!-- ProjectMenu_sanity(failed) -->
+</suite> <!-- Failed suite [ProjectMenu_suite] -->
