@@ -96,7 +96,7 @@ public class BaseTest {
         signIn = new Sign_InPage(driver);
         return signIn;
     }
-    @AfterMethod(enabled = false)
+    @AfterMethod()
     public void tearDown(){
         driver.close();
     }

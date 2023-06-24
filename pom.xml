@@ -79,7 +79,7 @@
                             <version>3.1.2</version>
                             <configuration>
                                 <suiteXmlFiles>
-                                    <suiteXmlFile>ProjectMenu.xml</suiteXmlFile>
+                                    <suiteXmlFile>TestNg/ProjectMenu.xml</suiteXmlFile>
                                 </suiteXmlFiles>
                             </configuration>
                         </plugin>

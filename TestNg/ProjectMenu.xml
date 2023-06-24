@@ -6,8 +6,7 @@
     </listeners>
     <test name="ProjectMenu_sanity"  parallel="classes"  thread-count="5">
         <classes>
-            <class name = "AutomationScripts.ProjectMenu" />
-            <class name="AutomationScripts.Repository"   />
+            <class name ="AutomationScripts.ProjectMenu" />
         </classes>
     </test>
 </suite>
