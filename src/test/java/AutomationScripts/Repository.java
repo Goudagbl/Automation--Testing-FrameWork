@@ -290,16 +290,45 @@ public class Repository extends BaseTest {
         IndividualProjectPage iproject = plist.navigate_Individual_ProjectSection();
         iproject.validate_Created_Project(webProjectName,projectType);
         RepoPage repo = plist.navigateToRepository();
-       StepGroupsPage stepGroup  = repo.navigateStepGroupsPage();
-       String libraryName =randomStringGenerator();
-       stepGroup.createLibrary(libraryName,parentLibrary);
+        StepGroupsPage stepGroup  = repo.navigateStepGroupsPage();
+        String libraryName =randomStringGenerator();
+        stepGroup.createLibrary(libraryName,parentLibrary);
         stepGroup.addStepGroupTOLibrary(libraryName,randomStringGenerator(),stepGroupType,stepGroupDescription);
         iproject.navigate_ToProjectsListPage();
         EditProjectPage editProject = plist.navigateToEditProjectPage(webProjectName);
         editProject.closeProject(webProjectName + " Project updated successfully");
         plist.deleteProject(webProjectName, webProjectName + " Project deleted successfully");
-
     }
+
+    @Test
+    public void verify_UserAble_to_ParametersAndVariableInStepGroup(){
+        ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
+        CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
+        Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String webProjectName = randomStringGenerator();
+        TestDevlopmentPage testDev = createPro.create_Project(webProjectName,projectType,wProjectDescription);
+        testDev.validate_userNavigated_TestDevSection("Scripts");
+        IndividualProjectPage iproject = plist.navigate_Individual_ProjectSection();
+        iproject.validate_Created_Project(webProjectName,projectType);
+        RepoPage repo = plist.navigateToRepository();
+        StepGroupsPage stepGroup  = repo.navigateStepGroupsPage();
+        String libraryName =randomStringGenerator();
+        stepGroup.createLibrary(libraryName,parentLibrary);
+        stepGroup.addStepGroupTOLibrary(libraryName,randomStringGenerator(),stepGroupType,stepGroupDescription);
+        stepGroup.navigateToParameter();
+        stepGroup.createParameters(randomStringGenerator(),"BigDecimal");
+        stepGroup.createVariable(randomStringGenerator(),randomStringGenerator());
+        iproject.navigate_ToProjectsListPage();
+        EditProjectPage editProject = plist.navigateToEditProjectPage(webProjectName);
+        editProject.closeProject(webProjectName + " Project updated successfully");
+        plist.deleteProject(webProjectName, webProjectName + " Project deleted successfully");
+    }
+
+
+
+
+
+
 
 
 

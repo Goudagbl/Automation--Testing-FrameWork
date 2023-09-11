@@ -92,11 +92,12 @@ public class BaseTest {
     @BeforeMethod(alwaysRun = true)
     public Sign_InPage setUp() throws Throwable {
         browserInitialization();
-        driver.get(pro.getProperty("Url"));
+        String EnvironmentToRun = System.getProperty("EnvURL") != null ? System.getProperty("EnvURL") : pro.getProperty("Url");
+        driver.get(EnvironmentToRun);
         signIn = new Sign_InPage(driver);
         return signIn;
     }
-    @AfterMethod()
+    @AfterMethod(enabled = false)
     public void tearDown(){
         driver.close();
     }

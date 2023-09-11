@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Date;
 
 public class ScreeenshotMechanism extends BaseTest{
-    public void getScreenShot(String scriptName){
+    public String getScreenShot(String scriptName){
        /* TakesScreenshot screenShot = (TakesScreenshot) driver;
         File scrFile = screenShot.getScreenshotAs(OutputType.FILE);
 
@@ -25,6 +25,8 @@ public class ScreeenshotMechanism extends BaseTest{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        String scrShotStoredLoc = "C:/Users/User/Downloads/Fireflink/ScreenShots/" + date + scriptName +".png";
+         return scrShotStoredLoc;
     }
 
 }

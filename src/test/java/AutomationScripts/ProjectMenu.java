@@ -88,6 +88,7 @@ public class ProjectMenu extends BaseTest {
     ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
     CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
     Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+    String  webProjectName = randomStringGenerator();
     TestDevlopmentPage testDev = createPro.create_Project(webProjectName,projectType, wProjectDescription);
     testDev.validate_userNavigated_TestDevSection("Scripts");
     IndividualProjectPage iproject =  plist.navigate_Individual_ProjectSection();
@@ -104,12 +105,12 @@ public void verify_userAble_to_Create_WebserviceProject() throws InterruptedExce
     ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
     CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
     Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+    String  webserviceName = randomStringGenerator();
     TestDevlopmentPage testDev = createPro.create_Project(webserviceName,webServiceprojectType,webServiceprojectDescription);
     testDev.validate_userNavigated_TestDevSection("Scripts");
     IndividualProjectPage iproject =  plist.navigate_Individual_ProjectSection();
     iproject.validate_Created_Project(webserviceName,webServiceprojectType);
     iproject.navigate_ToProjectsListPage();
-
     EditProjectPage editProject = plist.navigateToEditProjectPage(webserviceName);
     editProject.closeProject(webserviceName + " Project updated successfully");
     plist.deleteProject(webserviceName, webserviceName + " Project deleted successfully");
@@ -120,6 +121,7 @@ public void verify_userAble_to_Create_WebserviceProject() throws InterruptedExce
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String  salesforceName = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.create_Project(salesforceName,salesforceprojectType,salesforceprojectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iProject =  plist.navigate_Individual_ProjectSection();
@@ -137,6 +139,7 @@ public void verify_userAble_to_Create_WebserviceProject() throws InterruptedExce
       ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
       CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
       Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+      String  nativeAndroidProjectName = randomStringGenerator();
       TestDevlopmentPage testDev = createPro.createNativeAndroidProject(nativeAndroidProjectName,nativeAndroidProjectType,nativeAndroidProjectDescription);
       testDev.validate_userNavigated_TestDevSection("Scripts");
       IndividualProjectPage iProject = plist.navigate_Individual_ProjectSection();
@@ -153,6 +156,7 @@ public void verify_userAble_to_Create_WebserviceProject() throws InterruptedExce
       ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
       CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
       Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+      String  nativeIosProjectName = randomStringGenerator();
       TestDevlopmentPage testDev = createPro.createNativeIosProject(nativeIosProjectName,nativeIosProjectType,nativeIosProjectDescription);
       testDev.validate_userNavigated_TestDevSection("Scripts");
       IndividualProjectPage iProject = plist.navigate_Individual_ProjectSection();
@@ -170,6 +174,7 @@ public void verify_userAble_to_Create_WebserviceProject() throws InterruptedExce
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String nativeAndroidAndIosProjectName  = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.createNativeAndroidAndIosProject(nativeAndroidAndIosProjectName,nativeAndroidAndIosProjectType,nativeAndroidAndIosDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iProject = plist.navigate_Individual_ProjectSection();
@@ -186,6 +191,7 @@ public void verify_userAble_to_Create_WebserviceProject() throws InterruptedExce
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String hybridAndroidProjectName  = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.createHybridAndroidProject(hybridAndroidProjectName,hybridAndroidProjectType,hybridAndroidProjectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iProject = plist.navigate_Individual_ProjectSection();
@@ -201,6 +207,7 @@ public void verify_userAble_to_Create_WebserviceProject() throws InterruptedExce
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String hybridIosProjectName  = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.createHybridIosProject(hybridIosProjectName,hybridIosProjectType,hybridIosProjectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iProject = plist.navigate_Individual_ProjectSection();
@@ -220,6 +227,7 @@ public void verify_userAble_to_Create_WebserviceProject() throws InterruptedExce
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String hybridAndroidAndIosProjectName  = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.createHybridAndroidAndIosProject(hybridAndroidAndIosProjectName, hybridAndroidAndIosProjectType,hybridAndroidAndIosProjectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iProject = plist.navigate_Individual_ProjectSection();
@@ -236,6 +244,7 @@ public void verify_userAble_to_Create_WebserviceProject() throws InterruptedExce
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String webProjectName  = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.create_Project(webProjectName,projectType, wProjectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iproject =  plist.navigate_Individual_ProjectSection();
@@ -252,6 +261,7 @@ public void verify_userAble_to_Create_WebserviceProject() throws InterruptedExce
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String webProjectName  = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.create_Project(webProjectName,projectType, wProjectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iproject =  plist.navigate_Individual_ProjectSection();
@@ -267,6 +277,7 @@ public void verify_userAble_to_Create_WebserviceProject() throws InterruptedExce
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String webProjectName  = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.create_Project(webProjectName,projectType, wProjectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iproject =  plist.navigate_Individual_ProjectSection();
@@ -286,6 +297,7 @@ public void verify_userAble_to_Create_WebserviceProject() throws InterruptedExce
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String webProjectName  = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.create_Project(webProjectName,projectType, wProjectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iproject =  plist.navigate_Individual_ProjectSection();
@@ -301,6 +313,7 @@ public void verify_userAble_to_Create_WebserviceProject() throws InterruptedExce
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
+        String WebMobileprojectName  = randomStringGenerator();
         TestDevlopmentPage testDev = createPro.createWebAndMobileProject(WebMobileprojectName,WebMobileProjectType,WebandMobileProjectDescription);
         testDev.validate_userNavigated_TestDevSection("Scripts");
         IndividualProjectPage iProject = plist.navigate_Individual_ProjectSection();

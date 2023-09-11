@@ -87,10 +87,55 @@ WebDriver driver;
     @FindBy(xpath="//label[contains(@class,'project_label')]")
     WebElement stepGroupPageHeader;
 
+    @FindBy(xpath = "//a[text()='Parameters']")
+    WebElement parametersTab;
 
 
+    @FindBy(xpath="//button[contains(@class,'primary-btn')]")
+    WebElement plusParameter;
+
+    @FindBy(xpath="//label[contains(@class,'project_label')]")
+    WebElement parametersPageHeader;
+
+    @FindBy(xpath="//h2[@class='title']")
+    WebElement createParameterPopUpHeader;
+
+    @FindBy(css="#name")
+    WebElement parameterName;
+
+    @FindBy(xpath = "//div[@role='button']")
+    WebElement parameterTypeDropDown;
+
+    @FindBy(xpath = "//li[@role='option']")
+    List<WebElement> parameterTypes;
+
+    @FindBy(xpath = "//button[@class='primary-btn']")
+    WebElement createParameterButton;
+
+    @FindBy(xpath = "//ul[contains(@class,'navBar')]//a[text()='Variables']")
+    WebElement VariablesTab;
+
+    @FindBy(xpath = "//label[contains(@class,'project_label')]")
+    WebElement stepGroupVariableHeader;
+
+    @FindBy(xpath="//label[contains(@class,'project_label')]/..//button[contains(text(),'Variable')]")
+    WebElement plusVariable;
+
+    @FindBy(xpath = "//h2[@class='title']")
+    WebElement CreateStepGroupVariablePopUp;
+
+    @FindBy(id="name")
+    WebElement variableName;
+
+    @FindBy(css="#mui-component-select-type")
+    WebElement varTypeDropDown;
 
 
+    @FindBy(id="value")
+    WebElement variableValue;
+
+    @FindBy(xpath = "//button[@class='primary-btn' or contains(text(),'Create')]")
+    WebElement createVariable;
 
 
 
@@ -152,18 +197,61 @@ WebDriver driver;
                wait_attributeContains(passMessageForStep,3,"value",stepgroupName + " is passed");
                 wait_attributeContains(failMessageForStep,3,"value",stepgroupName + " is failed");
                clickOnElement(create);
+               wait_elementToBeClickable(parametersTab,3);
                wait_Element_To_Be_Visual(stepGroupPageHeader,5);
                Assert.assertEquals(stepGroupPageHeader.getText(),stepgroupName);
-
             }
 
         }
 
-
-
     }
 
+    public void navigateToParameter(){
+        clickOnElement(parametersTab);
+        wait_elementToBeClickable(plusParameter,3);
+        Assert.assertEquals(parametersPageHeader.getText(),"Parameters");
+    }
 
+    public void createParameters(String parName, String parameterType){
+        clickOnElement(plusParameter);
+        wait_Element_To_Be_Visual(createParameterPopUpHeader,3);
+        Assert.assertEquals(createParameterPopUpHeader.getText(),"Create Parameter");
+        enterIntoElement(parameterName,parName);
+        clickOnElement(parameterTypeDropDown);
+        wait_Elements_To_Be_Visual(parameterTypes,3);
+        for(WebElement paraType : parameterTypes)
+            if(paraType.getText().equalsIgnoreCase(parameterType)){
+                paraType.click();
+                break;
+        }
+        wait_elementToBeClickable(createParameterButton,1);
+        clickOnElement(createParameterButton);
+        wait_Element_To_Be_Visual(repoTosterMessage,3);
+        Assert.assertEquals(repoTosterMessage.getText(),parName+" Parameter created successfully");
+    }
+
+    public void createVariable(String varName,String varValue){
+        clickOnElement(VariablesTab);
+        wait_elementToBeClickable(plusVariable,3);
+        System.out.println(stepGroupVariableHeader.getText());
+        if(stepGroupVariableHeader.getText().contains("Step Group Variables")){
+            Assert.assertTrue(true);
+        }
+        else{
+            Assert.assertTrue(false);
+        }
+    /*   String headerText= stepGroupVariableHeader.getText();
+       String [] arr = headerText.split(" ");
+       Assert.assertEquals(arr[0],"Step Group Variables");
+
+     */
+       clickOnElement(plusVariable);
+       wait_Element_To_Be_Visual(CreateStepGroupVariablePopUp,2);
+       Assert.assertEquals(CreateStepGroupVariablePopUp.getText(), "Create Step Group Variable");
+       enterIntoElement(variableName,varName);
+       enterIntoElement(variableValue,varValue);
+       clickOnElement(createVariable);
+    }
 
 
 }

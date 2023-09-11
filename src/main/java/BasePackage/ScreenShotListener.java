@@ -1,5 +1,6 @@
 package BasePackage;
 
+import com.aventstack.extentreports.ExtentReports;
 import org.apache.commons.io.FileUtils;
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.openqa.selenium.OutputType;
@@ -14,9 +15,10 @@ import java.io.IOException;
 
 public class ScreenShotListener extends ScreeenshotMechanism implements ITestListener {
 
-
+    ExtentReports test;
     public void onTestStart(ITestResult result) {
-
+        test =  ExtentReportMechanism.getReports();
+        test.createTest(result.getMethod().getMethodName());
 
     }
 
@@ -28,8 +30,7 @@ public class ScreenShotListener extends ScreeenshotMechanism implements ITestLis
     @Override
     public void onTestFailure(ITestResult result ) {
     System.out.println(result.getMethod().getMethodName() + " Failed!");
-        getScreenShot(result.getMethod().getMethodName().trim());
-
+      String filePath  = getScreenShot(result.getMethod().getMethodName().trim());
     }
 
     @Override
@@ -54,7 +55,7 @@ public class ScreenShotListener extends ScreeenshotMechanism implements ITestLis
 
     @Override
     public void onFinish(ITestContext context) {
-
+        test.flush();
 
     }
 

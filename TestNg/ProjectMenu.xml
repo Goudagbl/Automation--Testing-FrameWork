@@ -1,10 +1,11 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="ProjectMenu_suite">
     <listeners>
-        <listener class-name="BasePackage.RetryListener"></listener>
+       <!-- <listener class-name="BasePackage.RetryListener"></listener> -->
+
         <listener class-name="BasePackage.ScreenShotListener"></listener>
     </listeners>
-    <test name="ProjectMenu_sanity"  parallel="classes"  thread-count="5">
+    <test name="ProjectMenu_sanity"  thread-count="5">
         <classes>
             <class name ="AutomationScripts.ProjectMenu" />
         </classes>
