@@ -1,8 +1,7 @@
 package ProjectMenu;
 
 import BasePackage.Libraries;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import TestData.TestdataPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -52,6 +51,10 @@ public WebDriver driver;
     WebElement allProjectsOption;
 
 
+    @FindBy(xpath="//span[text()='Test Data']")
+    WebElement Left_TestData;
+
+
 
     public void validate_Created_Project( String createdProjectName, String createdProjectTypeName){
         wait_elementToBeClickable(editButton , 10);
@@ -88,6 +91,14 @@ public WebDriver driver;
        // driver.navigate().refresh();
 
 
+    }
+
+
+
+    public TestdataPage navigateToTestData(){
+        clickOnElement(Left_TestData);
+        TestdataPage testdata = new TestdataPage(driver);
+        return testdata;
     }
 
 

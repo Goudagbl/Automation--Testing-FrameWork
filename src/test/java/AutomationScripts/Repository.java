@@ -301,7 +301,7 @@ public class Repository extends BaseTest {
     }
 
     @Test
-    public void verify_UserAble_to_ParametersAndVariableInStepGroup(){
+        public void verify_UserAble_to_ParametersAndVariableInStepGroup(){
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");

@@ -100,7 +100,7 @@ public class ProjectListPage extends Libraries {
     }
 
    public CreateProjectPage navigateTo_createProjectPage(){
-        wait_elementToBeClickable(projectButton,5);
+        wait_elementToBeClickable(projectButton,10);
         clickOnElement(projectButton);
        CreateProjectPage createPro = new CreateProjectPage(driver);
        return createPro;

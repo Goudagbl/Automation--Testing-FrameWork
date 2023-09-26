@@ -1,7 +1,6 @@
 package BasePackage;
 
 import FireFlinkPages.LicenseManagement.Sign_InPage;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.PageLoadStrategy;
@@ -28,7 +27,7 @@ public class BaseTest {
         pro.load(fis);
         String Browser= System.getProperty("browser") != null ? System.getProperty("browser") : pro.getProperty("browser");
         if(Browser.contains("chrome")){
-            WebDriverManager.chromedriver().setup();
+           // WebDriverManager.chromedriver().clearDriverCache().setup();
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--remote-allow-origins=*");
             if(Browser.equals("chrome headless")){
@@ -42,7 +41,7 @@ public class BaseTest {
            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         }
         else if(Browser.equalsIgnoreCase("firefox")) {
-            WebDriverManager.firefoxdriver().setup();
+         //   WebDriverManager.firefoxdriver().setup();
             driver = new FirefoxDriver();
             driver.manage().window().maximize();
 

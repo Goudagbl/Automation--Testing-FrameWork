@@ -16,7 +16,7 @@ public class RepoPage extends Libraries {
     public RepoPage(WebDriver driver){
         super(driver);
         this.driver= driver;
-        PageFactory.initElements(this.driver,this);
+        PageFactory.initElements(driver,this);
 
     }
 
