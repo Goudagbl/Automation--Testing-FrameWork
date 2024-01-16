@@ -24,6 +24,7 @@ public class TestData extends BaseTest {
     @Test
     public TestdataPage navigate_To_Testdata(){
         ProjectListPage plist = signIn.signInToFlinko(pro.getProperty("emailId"), pro.getProperty("Password"));
+
         CreateProjectPage createPro  = plist.navigateTo_createProjectPage();
         Assert.assertEquals(driver.findElement(By.xpath("//div[contains(@class,'header-layout-style-project')]//label")).getText(),"Create Project");
         String webProjectName = randomStringGenerator();
